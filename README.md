@@ -39,3 +39,42 @@ Tras un inicio de sesión correcto:
 Se le redirigirá a la página principal.
 El encabezado de la aplicación muestra Hola [dirección de correo electrónico] y un vínculo Cerrar sesión.
 Se crea una cookie llamada .AspNetCore.Identity.Application. Identity conserva las sesiones de usuario con autenticación basada en cookies. Y después de haber cerrado la sesión correctamente, se elimina la cookie .AspNetCore.Identity.Application para finalizar la sesión de usuario.
+
+# Extensión del modelo de datos de Identity (IdentityUser)
+Contendra propiedades para almacenar el nombre y los apellidos del usuario.
+
+# Personalización de la interfaz de usuario de Identity
+Los componentes predeterminados de la interfaz de usuario de Identity se empaquetan en una biblioteca de clases Razor (RCL) de .NET Standard. Como se utiliza una biblioteca de clases Razor, al usar la interfaz de usuario predeterminada se agregan pocos archivos al proyecto.
+
+Al personalizar la interfaz de usuario, primero debe volver a usar la herramienta aspnet-codegenerator para crear archivos que se usarán en lugar de la RCL. La herramienta permite seleccionar explícitamente qué archivos se crean. Se usan los componentes de la interfaz de usuario de la RCL si los archivos correspondientes no están presentes.
+
+# Personalización de los datos de la cuenta de usuario
+Agregue los archivos de registro del usuario que se van a modificar en el proyecto:
+dotnet aspnet-codegenerator identity --dbContext RazorPagesPetAuth --files "Account.Manage.EnableAuthenticator;Account.Manage.Index;Account.Register;Account.ConfirmEmail" --userClass RazorPagesPetUser --force
+
+En el comando anterior:
+La opción --dbContext proporciona a la herramienta conocimientos de la clase derivada de DbContext existente llamada RazorPagesPizzaAuth.
+La opción --files especifica una lista delimitada por signos de punto y coma de archivos únicos que se van a agregar al área de Identity.
+La opción --userClass da como resultado la creación de una clase derivada de IdentityUser llamada RazorPagesPizzaUser.
+La opción --force hace que se sobrescriban los archivos existentes en el área de Identity.
+
+Se agrega o modifica la nueva clase que hara uso del IdentityUser, y el html _LoginPartial ya que escapa del scope de la carpeta areas en su creacioin/modificacion
+
+# Actualización de la base de datos
+Cree y aplique una migración de EF Core para actualizar el almacén de datos subyacente:
+dotnet ef migrations add UpdateUser
+dotnet ef database update
+
+# Personalización del formulario de registro de usuarios
+En Areas/Identity/Pages/Account/Register.cshtml, agregue los nuevos campos
+En Areas/Identity/Pages/Account/Register.cshtml.cs, agregue compatibilidad para los cnuevos campos
+
+# Personalización del formulario de administración de perfiles
+Ha agregado los campos nuevos al formulario de registro de usuario, pero también debe agregarlos al formulario de administración de perfiles para que los usuarios existentes puedan editarlos.
+En Areas/Identity/Pages/Account/Manage/Index.cshtml
+
+# Configuración del remitente del correo electrónico de confirmación
+Para enviar el correo electrónico de confirmación, debe crear una implementación de IEmailSender y registrarla en el sistema de inserción de dependencias. Para simplificar el proceso, la implementación no envía realmente correo electrónico a un servidor SMTP. Solo escribe el contenido del correo electrónico en la consola.
+
+
+
