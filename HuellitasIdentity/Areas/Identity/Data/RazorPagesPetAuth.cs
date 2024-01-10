@@ -1,10 +1,11 @@
+using HuellitasIdentity.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HuellitasIdentity.Areas.Identity.Data;
 
-public class RazorPagesPetAuth : IdentityDbContext<IdentityUser>
+public class RazorPagesPetAuth : IdentityDbContext<RazorPagesPetUser>
 {
     public RazorPagesPetAuth(DbContextOptions<RazorPagesPetAuth> options)
         : base(options)

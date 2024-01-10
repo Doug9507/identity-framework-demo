@@ -6,7 +6,8 @@ namespace HuellitasIdentity.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pet name is required")]
+        [Display(Name = "Pet name")]
         public string? Name { get; set; }
         public PetSize Size { get; set; }
         public bool IsPedigree { get; set; }

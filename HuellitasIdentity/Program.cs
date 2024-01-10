@@ -1,17 +1,22 @@
 using HuellitasIdentity.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
+using HuellitasIdentity.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 //Identity configuration
 var connectionString = builder.Configuration.GetConnectionString("RazorPagesPetAuthConnection");
-builder.Services.AddDbContext<RazorPagesPetAuth>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<RazorPagesPetAuth>(options =>
+    options.UseSqlServer(connectionString)); builder.Services.AddDbContext<RazorPagesPetAuth>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<RazorPagesPetUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<RazorPagesPetAuth>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//Dependecies injection
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
