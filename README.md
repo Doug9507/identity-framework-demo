@@ -74,7 +74,17 @@ Ha agregado los campos nuevos al formulario de registro de usuario, pero tambié
 En Areas/Identity/Pages/Account/Manage/Index.cshtml
 
 # Configuración del remitente del correo electrónico de confirmación
-Para enviar el correo electrónico de confirmación, debe crear una implementación de IEmailSender y registrarla en el sistema de inserción de dependencias. Para simplificar el proceso, la implementación no envía realmente correo electrónico a un servidor SMTP. Solo escribe el contenido del correo electrónico en la consola.
+Para enviar el correo electrónico de confirmación, debe crear una implementación de IEmailSender y registrarla en el sistema de inserción de dependencias. Para simplificar el proceso, la implementación no envía realmente correo electrónico a un servidor SMTP. 
+Solo escribe el contenido del correo electrónico en la consola.
+
+# Configuración de la autenticación multifactor
+Adición de un servicio de código QR
+En el panel de terminal, instale el paquete NuGet QRCoder:
+dotnet add package QRCoder --version 1.4.3
+
+# Personalización de la autenticación multifactor
+Abra Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml.cs
+
 
 
 
