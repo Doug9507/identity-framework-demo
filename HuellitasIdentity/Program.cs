@@ -2,6 +2,8 @@ using HuellitasIdentity.Areas.Identity.Data;
 using HuellitasIdentity.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using QRCoder;
+
 var builder = WebApplication.CreateBuilder(args);
 
 //Identity configuration
@@ -17,6 +19,7 @@ builder.Services.AddRazorPages();
 
 //Dependecies injection
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddSingleton(new QRCodeService(new QRCodeGenerator()));
 
 var app = builder.Build();
 
