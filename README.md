@@ -85,6 +85,11 @@ dotnet add package QRCoder --version 1.4.3
 # Personalización de la autenticación multifactor
 Abra Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml.cs
 
+# Autorización basada en directivas
+Uso del [Authorize] en los endpoints necesarios, configuracion del program para que acepte autorizacion
+
+# Resumen
+Se ha agregado Identity a un proyecto existente de Razor Pages de ASP.NET Core. Los componentes predeterminados de la interfaz de usuario de Identity se han personalizado para satisfacer los requisitos empresariales y técnicos. Se ha creado una directiva de autorización para proteger ciertas características de la aplicación. Por último, se ha usado la directiva de autorización para restringir el acceso, de forma que solo los administradores puedan ver y acceder a determinadas funciones.
 
 
 
