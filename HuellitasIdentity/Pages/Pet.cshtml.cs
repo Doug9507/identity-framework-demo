@@ -1,12 +1,15 @@
 using HuellitasIdentity.Models;
 using HuellitasIdentity.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HuellitasIdentity.Pages
 {
+    [Authorize]
     public class PetModel : PageModel
     {
+        public bool IsAdmin => HttpContext.User.HasClaim("IsAdmin", bool.TrueString);
         public List<Pet> pets = new();
 
         [BindProperty]
@@ -19,6 +22,8 @@ namespace HuellitasIdentity.Pages
 
         public IActionResult OnPost()
         {
+            if (!IsAdmin) return Forbid();
+
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -29,6 +34,7 @@ namespace HuellitasIdentity.Pages
 
         public IActionResult OnPostDelete(int id)
         {
+            if (!IsAdmin) return Forbid();
             PetService.Delete(id);
             return RedirectToAction("Get");
         }
